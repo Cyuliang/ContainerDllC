@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContainerDll", "ContainerDll\ContainerDll.vcxproj", "{7F20BE40-8772-4022-AD7D-930361A22755}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Debug|x64.ActiveCfg = Debug|x64
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Debug|x64.Build.0 = Debug|x64
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Debug|x86.ActiveCfg = Debug|Win32
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Debug|x86.Build.0 = Debug|Win32
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Release|x64.ActiveCfg = Release|x64
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Release|x64.Build.0 = Release|x64
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Release|x86.ActiveCfg = Release|Win32
+		{7F20BE40-8772-4022-AD7D-930361A22755}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CE07CD73-64CF-4E12-8953-C1301748D0C2}
+	EndGlobalSection
+EndGlobal
