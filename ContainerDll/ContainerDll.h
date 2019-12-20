@@ -5,7 +5,6 @@
 #else  
 #define CONTAINERDLL_EXPORTS_API  _declspec(dllimport)  
 #endif 
-//234
 
 #include "stdio.h"
 #include "WinSock2.h"
@@ -30,22 +29,22 @@ public:
 	typedef void(*containerCallBack)(string,string, string,string, string,string,string, string,string);
 
 	///注册结果回调函数
-	void registerContainerCallBack(containerCallBack func);
+	void __stdcall registerContainerCallBack(containerCallBack func);
 
 	///注册日志回调函数
-	void registerMessageCallBack(messageCallBack func);
+	void __stdcall registerMessageCallBack(messageCallBack func);
 
 	///注册信息流回调函数
-	void registerResultCallBack(messageCallBack func);
+	void __stdcall registerResultCallBack(messageCallBack func);
 
 	///初始化TCP
-	void init(const char *serverIP, u_short serverPort);
+	void __stdcall init(const char *serverIP, u_short serverPort);
 
 	///主动获取结果
-	bool getResult();
+	bool __stdcall getResult();
 
 	///设置获取结果模式
-	void setModel(bool model);
+	void __stdcall setModel(bool model);
 
 private:
 

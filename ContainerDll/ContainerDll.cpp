@@ -30,31 +30,31 @@ Container::~Container()
 }
 
 ///设置模式
-void Container::setModel(bool model)
+void __stdcall Container::setModel(bool model)
 {
 	this->model = model;
 }
 
 ///注册结果回调函数
-void Container::registerContainerCallBack(containerCallBack func)
+void __stdcall Container::registerContainerCallBack(containerCallBack func)
 {
 	this->containerFunc = func;
 }
 
 ///注册信息流回调函数
-void Container::registerMessageCallBack(messageCallBack func)
+void __stdcall Container::registerMessageCallBack(messageCallBack func)
 {
 	this->messageFunc = func;
 }
 
 ///注册识别流回调函数
-void Container::registerResultCallBack(messageCallBack func)
+void __stdcall Container::registerResultCallBack(messageCallBack func)
 {
 	this->resultFunc = func;
 }
 
 ///初始化SOCKET版本
-void Container::init(const char *serverIP, u_short serverPort)
+void __stdcall Container::init(const char *serverIP, u_short serverPort)
 {
 	this->serverIP = serverIP;
 	this->serverPort = serverPort;
@@ -81,7 +81,7 @@ void Container::init(const char *serverIP, u_short serverPort)
 }
 
 ///主动获取结果
-bool Container::getResult()
+bool __stdcall Container::getResult()
 {
 	if (model) {
 		if (send(socketClient, "[R|01]", 7, 0) == SOCKET_ERROR)
@@ -196,7 +196,7 @@ DWORD Container::threadProc(LPVOID lpParam)
 				else {					
 					while (true)//排除心跳包
 					{
-						int pos = tmp.find("[H]");
+						size_t pos = tmp.find("[H]");
 						if (pos !=tmp.npos) {							
 							tmp.erase(pos,4);
 						}
@@ -264,7 +264,7 @@ DWORD  Container::ThreadTime(LPVOID lpParam)
 void Container::containerAnalysis(string con)
 {	
 	string str[20];
-	int pos = con.rfind("[C|");
+	size_t pos = con.rfind("[C|");
 
 	//中间结果
 	resultFunc(con.substr(0,pos));
@@ -289,7 +289,7 @@ void Container::containerAnalysis(string con)
 
 	if (result&&model) {//主动模式
 		if (str[2] != "2") {
-			containerFunc(str[0], str[1], str[2], str[3], str[4], str[7], str[6], str[5], str[8]);
+			containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
 		}
 		else {//时间，通道号，箱型，前箱，校验，后箱，校验，前箱型，后箱型
 			containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
@@ -298,7 +298,7 @@ void Container::containerAnalysis(string con)
 	}
 	if (!model) {//被动模式
 		if (str[2] != "2") {
-			containerFunc(str[0], str[1], str[2], str[3], str[4], str[7], str[6], str[5], str[8]);
+			containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
 		}
 		else {//时间，通道号，箱型，前箱，校验，后箱，校验，前箱型，后箱型
 			containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
