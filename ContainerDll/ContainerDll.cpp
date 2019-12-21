@@ -1,5 +1,4 @@
-﻿#include "..\..\ConsoleApplication1\ConsoleApplication1\ContainerDll.h"
-// ContainerDll.cpp : 定义 DLL 应用程序的导出函数。
+﻿// ContainerDll.cpp : 定义 DLL 应用程序的导出函数。
 //
 #include "stdafx.h"
 #include "ContainerDll.h"
@@ -30,31 +29,31 @@ Container::~Container()
 }
 
 ///设置模式
-void __stdcall Container::setModel(bool model)
+void  Container::setModel(bool model)
 {
 	this->model = model;
 }
 
 ///注册结果回调函数
-void __stdcall Container::registerContainerCallBack(containerCallBack func)
+void  Container::registerContainerCallBack(containerCallBack func)
 {
 	this->containerFunc = func;
 }
 
 ///注册信息流回调函数
-void __stdcall Container::registerMessageCallBack(messageCallBack func)
+void  Container::registerMessageCallBack(messageCallBack func)
 {
 	this->messageFunc = func;
 }
 
 ///注册识别流回调函数
-void __stdcall Container::registerResultCallBack(messageCallBack func)
+void  Container::registerResultCallBack(messageCallBack func)
 {
 	this->resultFunc = func;
 }
 
 ///初始化SOCKET版本
-void __stdcall Container::init(const char *serverIP, u_short serverPort)
+void  Container::init(const char *serverIP, u_short serverPort)
 {
 	this->serverIP = serverIP;
 	this->serverPort = serverPort;
@@ -66,7 +65,7 @@ void __stdcall Container::init(const char *serverIP, u_short serverPort)
 	WORD version = MAKEWORD(2, 2);
 	WSADATA wsaData = { 0 };	
 
-	if (messageFunc != NULL&& resultFunc!=NULL&&containerFunc!=NULL) {
+	if (messageFunc != NULL) {
 		if (WSAStartup(version, &wsaData) != 0) {
 			messageFunc("WSAStartup Failed :" + std::to_string(WSAGetLastError())+"\n");
 		}
@@ -81,7 +80,7 @@ void __stdcall Container::init(const char *serverIP, u_short serverPort)
 }
 
 ///主动获取结果
-bool __stdcall Container::getResult()
+bool  Container::getResult()
 {
 	if (model) {
 		if (send(socketClient, "[R|01]", 7, 0) == SOCKET_ERROR)
@@ -196,7 +195,7 @@ DWORD Container::threadProc(LPVOID lpParam)
 				else {					
 					while (true)//排除心跳包
 					{
-						size_t pos = tmp.find("[H]");
+						int pos = tmp.find("[H]");
 						if (pos !=tmp.npos) {							
 							tmp.erase(pos,4);
 						}
@@ -264,7 +263,7 @@ DWORD  Container::ThreadTime(LPVOID lpParam)
 void Container::containerAnalysis(string con)
 {	
 	string str[20];
-	size_t pos = con.rfind("[C|");
+	int pos = con.rfind("[C|");
 
 	//中间结果
 	resultFunc(con.substr(0,pos));

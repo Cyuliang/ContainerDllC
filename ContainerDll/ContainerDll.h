@@ -29,22 +29,22 @@ public:
 	typedef void(*containerCallBack)(string,string, string,string, string,string,string, string,string);
 
 	///注册结果回调函数
-	void __stdcall registerContainerCallBack(containerCallBack func);
+	void  registerContainerCallBack(containerCallBack func);
 
 	///注册日志回调函数
-	void __stdcall registerMessageCallBack(messageCallBack func);
+	void  registerMessageCallBack(messageCallBack func);
 
 	///注册信息流回调函数
-	void __stdcall registerResultCallBack(messageCallBack func);
+	void  registerResultCallBack(messageCallBack func);
 
 	///初始化TCP
-	void __stdcall init(const char *serverIP, u_short serverPort);
+	void  init(const char *serverIP, u_short serverPort);
 
 	///主动获取结果
-	bool __stdcall getResult();
+	bool  getResult();
 
 	///设置获取结果模式
-	void __stdcall setModel(bool model);
+	void  setModel(bool model);
 
 private:
 
