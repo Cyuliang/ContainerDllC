@@ -19,6 +19,10 @@ Container::Container()
 	socketEvent = WSA_INVALID_EVENT;
 	createEvent = nullptr;
 	threadEvent = nullptr;
+
+	messageFunc = nullptr;
+	resultFunc = nullptr;
+	containerFunc = nullptr;
 }
 
 Container::~Container()
@@ -65,17 +69,21 @@ void  Container::init(const char *serverIP, u_short serverPort)
 	WORD version = MAKEWORD(2, 2);
 	WSADATA wsaData = { 0 };	
 
-	if (messageFunc != NULL) {
-		if (WSAStartup(version, &wsaData) != 0) {
-			messageFunc("WSAStartup Failed :" + std::to_string(WSAGetLastError())+"\n");
+	if (WSAStartup(version, &wsaData) != 0) {
+
+		if (messageFunc != nullptr) {
+			messageFunc("WSAStartup Failed :" + std::to_string(WSAGetLastError()) + "\n");
 		}
-		else {
+	}
+	else {
+
+		if (messageFunc != nullptr) {
 			messageFunc("WSAStartup Successful\n");
-			if (socketLink()) {//判断连接
-				isLink = true;
-			}
-			threadTime = CreateThread(nullptr, 0, ThreadTime, (void*)this, 0, 0);
 		}
+		if (socketLink()) {//判断连接
+			isLink = true;
+		}
+		threadTime = CreateThread(nullptr, 0, ThreadTime, (void*)this, 0, 0);
 	}
 }
 
@@ -111,24 +119,42 @@ bool Container::socketLink()
 	createEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
 
 	if (INVALID_SOCKET == socketClient) {
-		messageFunc("Socket Init Failed :" + std::to_string(WSAGetLastError()) + "\n");
+
+		if (messageFunc != nullptr) {
+			messageFunc("Socket Init Failed :" + std::to_string(WSAGetLastError()) + "\n");
+		}
 		return false;
 	}
 	else {
-		messageFunc("Socket Init Successful\n");
+
+		if (messageFunc != nullptr) {
+			messageFunc("Socket Init Successful\n");
+		}
 		if (connect(socketClient, (sockaddr*)&socketAddr, sizeof(sockaddr)) == SOCKET_ERROR) {
-			messageFunc("Socket Link Failed\n");
+
+			if (messageFunc != nullptr) {
+				messageFunc("Socket Link Failed\n");
+			}
 			closesocket(socketClient);
 			return false;
 		}
 		else {
-			messageFunc("Socket Link Successful\n");
+
+			if (messageFunc != nullptr) {
+				messageFunc("Socket Link Successful\n");
+			}
 			if (WSAEventSelect(socketClient, socketEvent, FD_READ | FD_CLOSE | FD_CONNECT) != 0) {
-				messageFunc("Event Set Failed\n");
+
+				if (messageFunc != nullptr) {
+					messageFunc("Event Set Failed\n");
+				}
 				return false;
 			}
 			else {
-				messageFunc("Event Set Successful\n");
+
+				if (messageFunc != nullptr) {
+					messageFunc("Event Set Successful\n");
+				}
 				threadEvent = CreateThread(nullptr, 0, threadProc, (void*)this, 0, 0);
 			}
 		}
@@ -158,7 +184,10 @@ DWORD Container::threadProc(LPVOID lpParam)
 		index = ret - WSA_WAIT_EVENT_0;
 
 		if (index == WSA_WAIT_FAILED || index == WSA_WAIT_TIMEOUT) {
-			client->messageFunc("Socket Failed or Timeout Error :" + std::to_string(WSAGetLastError()) + "\n");	
+
+			if (client->messageFunc != nullptr) {
+				client->messageFunc("Socket Failed or Timeout Error :" + std::to_string(WSAGetLastError()) + "\n");
+			}
 			continue;
 		}
 
@@ -168,7 +197,10 @@ DWORD Container::threadProc(LPVOID lpParam)
 		WSAEnumNetworkEvents(client->socketClient, events[0], &networkEvent);
 		if (networkEvent.lNetworkEvents & FD_READ){
 			if (networkEvent.iErrorCode[FD_READ_BIT != 0]){
-				client->messageFunc("Socket FD_READ Error :" + std::to_string(WSAGetLastError()) + "\n");
+
+				if (client->messageFunc != nullptr) {
+					client->messageFunc("Socket FD_READ Error :" + std::to_string(WSAGetLastError()) + "\n");
+				}
 				continue;
 			}
 
@@ -180,7 +212,10 @@ DWORD Container::threadProc(LPVOID lpParam)
 				char* buff = new char[1024]{ 0 };
 				ret = recv(client->socketClient, buff, 1024, 0);
 				if (ret == 0 || (ret == SOCKET_ERROR && WSAGetLastError() == WSAECONNRESET)) {
-					client->messageFunc("Socket Read Data Error :" + std::to_string(WSAGetLastError()) + "\n");
+
+					if (client->messageFunc != nullptr) {
+						client->messageFunc("Socket Read Data Error :" + std::to_string(WSAGetLastError()) + "\n");
+					}
 					break;
 				}
 
@@ -215,10 +250,16 @@ DWORD Container::threadProc(LPVOID lpParam)
 		//关闭事件
 		else if (networkEvent.lNetworkEvents & FD_CLOSE){
 			if (networkEvent.iErrorCode[FD_CLOSE_BIT] != 0){
-				client->messageFunc("Socket FD_CLOSE Error :" + std::to_string(WSAGetLastError()) + "\n");
+
+				if (client->messageFunc != nullptr) {
+					client->messageFunc("Socket FD_CLOSE Error :" + std::to_string(WSAGetLastError()) + "\n");
+				}
 				continue;   
 			}			
-			client->messageFunc("Socket FD_CLOSE Successful\n");
+
+			if (client->messageFunc != nullptr) {
+				client->messageFunc("Socket FD_CLOSE Successful\n");
+			}
 			break;    //关闭		
 		}
 		//连接事件
@@ -229,7 +270,10 @@ DWORD Container::threadProc(LPVOID lpParam)
 				{
 					break;
 				}
-				client->messageFunc("Socket FD_CONNECT Successful\n");
+
+				if (client->messageFunc != nullptr) {
+					client->messageFunc("Socket FD_CONNECT Successful\n");
+				}
 			}
 		}
 		client->isLink = true;
@@ -266,7 +310,9 @@ void Container::containerAnalysis(string con)
 	int pos = con.rfind("[C|");
 
 	//中间结果
-	resultFunc(con.substr(0,pos));
+	if (resultFunc != nullptr) {
+		resultFunc(con.substr(0, pos));
+	}
 
 	string tmp= con.substr(pos + 3);
 
@@ -288,19 +334,32 @@ void Container::containerAnalysis(string con)
 
 	if (result&&model) {//主动模式
 		if (str[2] != "2") {
-			containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
+
+			if (containerFunc != nullptr) {
+				containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
+			}
+
 		}
 		else {//时间，通道号，箱型，前箱，校验，后箱，校验，前箱型，后箱型
-			containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+
+			if (containerFunc != nullptr) {
+				containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+			}
 		}
 		result = false;
 	}
 	if (!model) {//被动模式
 		if (str[2] != "2") {
-			containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
+
+			if (containerFunc != nullptr) {
+				containerFunc(str[0], str[1], str[2], str[3], "", "", "", str[5], "");
+			}
 		}
 		else {//时间，通道号，箱型，前箱，校验，后箱，校验，前箱型，后箱型
-			containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+
+			if (containerFunc != nullptr) {
+				containerFunc(str[0], str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8]);
+			}
 		}
 	}
 }
