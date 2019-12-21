@@ -230,7 +230,7 @@ DWORD Container::threadProc(LPVOID lpParam)
 				else {					
 					while (true)//排除心跳包
 					{
-						int pos = tmp.find("[H]");
+						size_t pos = tmp.find("[H]");
 						if (pos !=tmp.npos) {							
 							tmp.erase(pos,4);
 						}
@@ -307,7 +307,7 @@ DWORD  Container::ThreadTime(LPVOID lpParam)
 void Container::containerAnalysis(string con)
 {	
 	string str[20];
-	int pos = con.rfind("[C|");
+	size_t pos = con.rfind("[C|");
 
 	//中间结果
 	if (resultFunc != nullptr) {
