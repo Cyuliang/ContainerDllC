@@ -5,34 +5,6 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ContainerDll", "ContainerDll\ContainerDll.vcxproj", "{7F20BE40-8772-4022-AD7D-930361A22755}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "bin", "bin", "{430A2A61-B4F1-4010-B064-797936FAABAF}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x86", "x86", "{705FB69A-D927-4E75-96E9-35F0A1C0F032}"
-	ProjectSection(SolutionItems) = preProject
-		Release\ContainerDll.dll = Release\ContainerDll.dll
-		Release\ContainerDll.exp = Release\ContainerDll.exp
-		Release\ContainerDll.iobj = Release\ContainerDll.iobj
-		Release\ContainerDll.ipdb = Release\ContainerDll.ipdb
-		Release\ContainerDll.lib = Release\ContainerDll.lib
-		Release\ContainerDll.pdb = Release\ContainerDll.pdb
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "x64", "x64", "{473A0C8C-8860-47CB-A0BF-1D8647599C3A}"
-	ProjectSection(SolutionItems) = preProject
-		x64\Release\ContainerDll.dll = x64\Release\ContainerDll.dll
-		x64\Release\ContainerDll.exp = x64\Release\ContainerDll.exp
-		x64\Release\ContainerDll.iobj = x64\Release\ContainerDll.iobj
-		x64\Release\ContainerDll.ipdb = x64\Release\ContainerDll.ipdb
-		x64\Release\ContainerDll.lib = x64\Release\ContainerDll.lib
-		x64\Release\ContainerDll.pdb = x64\Release\ContainerDll.pdb
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CB750BDC-1E0F-474B-8027-552622669D8E}"
-	ProjectSection(SolutionItems) = preProject
-		..\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp = ..\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp
-		ContainerDll\ContainerDll.h = ContainerDll\ContainerDll.h
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -52,10 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{705FB69A-D927-4E75-96E9-35F0A1C0F032} = {430A2A61-B4F1-4010-B064-797936FAABAF}
-		{473A0C8C-8860-47CB-A0BF-1D8647599C3A} = {430A2A61-B4F1-4010-B064-797936FAABAF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CE07CD73-64CF-4E12-8953-C1301748D0C2}

@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="bin">
+      <UniqueIdentifier>{b8cb754d-8688-4c21-8812-f1148c32f24e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{4b0cc17e-db30-46ed-8c45-e153d8ed2b7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\x86">
+      <UniqueIdentifier>{2e966039-2179-4197-8c69-ba63263c9621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="bin\x64">
+      <UniqueIdentifier>{a14f4282-120d-41f8-9cbf-835341645146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -35,8 +47,49 @@
     <ClCompile Include="dllmain.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp">
+      <Filter>test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+    <None Include="..\x64\Release\ContainerDll.dll">
+      <Filter>bin\x64</Filter>
+    </None>
+    <None Include="..\x64\Release\ContainerDll.exp">
+      <Filter>bin\x64</Filter>
+    </None>
+    <None Include="..\x64\Release\ContainerDll.iobj">
+      <Filter>bin\x64</Filter>
+    </None>
+    <None Include="..\x64\Release\ContainerDll.ipdb">
+      <Filter>bin\x64</Filter>
+    </None>
+    <None Include="..\x64\Release\ContainerDll.pdb">
+      <Filter>bin\x64</Filter>
+    </None>
+    <None Include="..\Release\ContainerDll.dll">
+      <Filter>bin\x86</Filter>
+    </None>
+    <None Include="..\Release\ContainerDll.exp">
+      <Filter>bin\x86</Filter>
+    </None>
+    <None Include="..\Release\ContainerDll.iobj">
+      <Filter>bin\x86</Filter>
+    </None>
+    <None Include="..\Release\ContainerDll.ipdb">
+      <Filter>bin\x86</Filter>
+    </None>
+    <None Include="..\Release\ContainerDll.pdb">
+      <Filter>bin\x86</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\x64\Release\ContainerDll.lib">
+      <Filter>bin\x64</Filter>
+    </Library>
+    <Library Include="..\Release\ContainerDll.lib">
+      <Filter>bin\x86</Filter>
+    </Library>
   </ItemGroup>
 </Project>

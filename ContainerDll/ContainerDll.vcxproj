@@ -152,6 +152,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\ConsoleApplication1\ConsoleApplication1\ConsoleApplication1.cpp" />
     <ClCompile Include="ContainerDll.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -162,7 +163,21 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Release\ContainerDll.dll" />
+    <None Include="..\Release\ContainerDll.exp" />
+    <None Include="..\Release\ContainerDll.iobj" />
+    <None Include="..\Release\ContainerDll.ipdb" />
+    <None Include="..\Release\ContainerDll.pdb" />
+    <None Include="..\x64\Release\ContainerDll.dll" />
+    <None Include="..\x64\Release\ContainerDll.exp" />
+    <None Include="..\x64\Release\ContainerDll.iobj" />
+    <None Include="..\x64\Release\ContainerDll.ipdb" />
+    <None Include="..\x64\Release\ContainerDll.pdb" />
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\Release\ContainerDll.lib" />
+    <Library Include="..\x64\Release\ContainerDll.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
